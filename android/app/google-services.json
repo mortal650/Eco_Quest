@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "886823707196",
+    "project_id": "ecoquest-1eeae",
+    "storage_bucket": "ecoquest-1eeae.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886823707196:android:a6595bcaef21cf04355939",
+        "android_client_info": {
+          "package_name": "com.example.eco_quest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUqZh1zd7WnP70VcFmMqAEhA4qJFeUe88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886823707196:android:0c889262f9594c16355939",
+        "android_client_info": {
+          "package_name": "com.example.fitness"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUqZh1zd7WnP70VcFmMqAEhA4qJFeUe88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
