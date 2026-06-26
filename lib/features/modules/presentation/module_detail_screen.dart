@@ -14,6 +14,9 @@ class ModuleDetailScreen extends ConsumerWidget {
     'agriculture': Icons.agriculture,
     'thermostat': Icons.thermostat,
     'science': Icons.science,
+    'recycling': Icons.recycling,
+    'eco': Icons.eco,
+    'spa': Icons.spa,
   };
 
   @override

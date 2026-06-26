@@ -11,6 +11,16 @@ final authStateProvider = StreamProvider<User?>((ref) {
   return ref.watch(authRepositoryProvider).authStateChanges;
 });
 
+final currentUserRoleProvider = FutureProvider<String?>((ref) async {
+  final user = ref.watch(authStateProvider).valueOrNull;
+  if (user == null) return null;
+  final snap = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .get();
+  return snap.data()?['role'] as String?;
+});
+
 class AuthRepository {
   const AuthRepository(this._auth, this._firestore);
   final FirebaseAuth _auth;
@@ -27,6 +37,7 @@ class AuthRepository {
     required String email,
     required String password,
     required String displayName,
+    required String role,
   }) async {
     final credential = await _auth.createUserWithEmailAndPassword(
       email: email,
@@ -39,10 +50,7 @@ class AuthRepository {
       uid: credential.user!.uid,
       displayName: displayName,
       email: email,
-      xp: 0,
-      level: 1,
-      streak: 0,
-      badges: [],
+      role: role,
       createdAt: now,
       lastLogin: now,
     );
@@ -63,11 +71,48 @@ class AuthRepository {
     });
   }
 
+  Future<String?> getUserRole() async {
+    if (_auth.currentUser == null) return null;
+    final snap = await _usersCol.doc(_auth.currentUser!.uid).get();
+    return snap.data()?['role'] as String?;
+  }
+
+  Future<void> updateUserProfile({
+    required String field,
+    required dynamic value,
+  }) async {
+    if (_auth.currentUser == null) return;
+    await _usersCol.doc(_auth.currentUser!.uid).update({field: value});
+  }
+
   Future<void> sendPasswordResetEmail(String email) async {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<void> deleteAccount() async {
+    final user = _auth.currentUser;
+    if (user == null) return;
+
+    final uid = user.uid;
+
+    // Delete subcollections first (quiz_results)
+    final quizResults = await _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('quiz_results')
+        .get();
+    for (final doc in quizResults.docs) {
+      await doc.reference.delete();
+    }
+
+    // Delete main user document
+    await _firestore.collection('users').doc(uid).delete();
+
+    // Delete Firebase Auth account
+    await user.delete();
   }
 }

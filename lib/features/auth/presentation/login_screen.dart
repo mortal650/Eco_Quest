@@ -44,6 +44,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -56,12 +58,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Icon(
                   Icons.eco,
                   size: 72,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: colorScheme.primary,
                 ),
                 const SizedBox(height: 16),
                 Text(
                   'EcoQuest',
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.primary,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Learn, Play, Save the Planet',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                 ),
                 const SizedBox(height: 32),
                 TextFormField(
@@ -102,7 +114,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: Text(
                       _error!,
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                        color: colorScheme.error,
                       ),
                     ),
                   ),

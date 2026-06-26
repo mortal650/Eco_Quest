@@ -15,6 +15,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   final _nameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
   final _passwordCtrl = TextEditingController();
+  String? _selectedRole;
   bool _loading = false;
   String? _error;
 
@@ -28,6 +29,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   Future<void> _signUp() async {
     if (!_formKey.currentState!.validate()) return;
+    if (_selectedRole == null) {
+      setState(() => _error = 'Please select a role');
+      return;
+    }
     setState(() {
       _loading = true;
       _error = null;
@@ -37,6 +42,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
             email: _emailCtrl.text.trim(),
             password: _passwordCtrl.text,
             displayName: _nameCtrl.text.trim(),
+            role: _selectedRole!,
           );
     } catch (e) {
       setState(() => _error = e.toString());
@@ -47,6 +53,8 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Sign Up')),
       body: Center(
@@ -60,13 +68,13 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 Icon(
                   Icons.person_add_outlined,
                   size: 64,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: colorScheme.primary,
                 ),
                 const SizedBox(height: 24),
                 TextFormField(
                   controller: _nameCtrl,
                   decoration: const InputDecoration(
-                    labelText: 'Display Name',
+                    labelText: 'Full Name',
                     prefixIcon: Icon(Icons.person_outlined),
                     border: OutlineInputBorder(),
                   ),
@@ -98,13 +106,40 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                       v != null && v.length >= 6 ? null : 'Min 6 characters',
                 ),
                 const SizedBox(height: 24),
+                Text(
+                  'I am a...',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _RoleCard(
+                        icon: Icons.school_outlined,
+                        label: 'Student',
+                        isSelected: _selectedRole == 'student',
+                        onTap: () => setState(() => _selectedRole = 'student'),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _RoleCard(
+                        icon: Icons.school_outlined,
+                        label: 'Teacher',
+                        isSelected: _selectedRole == 'teacher',
+                        onTap: () => setState(() => _selectedRole = 'teacher'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
                 if (_error != null)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16),
                     child: Text(
                       _error!,
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                        color: colorScheme.error,
                       ),
                     ),
                   ),
@@ -129,6 +164,60 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _RoleCard extends StatelessWidget {
+  const _RoleCard({
+    required this.icon,
+    required this.label,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Card(
+      elevation: isSelected ? 4 : 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: isSelected ? colorScheme.primary : Colors.transparent,
+          width: 2,
+        ),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                size: 40,
+                color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: isSelected ? colorScheme.primary : null,
+                      fontWeight: isSelected ? FontWeight.bold : null,
+                    ),
+              ),
+            ],
           ),
         ),
       ),

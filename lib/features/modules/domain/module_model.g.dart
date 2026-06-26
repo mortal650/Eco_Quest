@@ -55,6 +55,9 @@ _$QuizQuestionImpl _$$QuizQuestionImplFromJson(Map<String, dynamic> json) =>
           (json['options'] as List<dynamic>).map((e) => e as String).toList(),
       correctIndex: (json['correctIndex'] as num).toInt(),
       explanation: json['explanation'] as String,
+      difficulty: $enumDecodeNullable(
+              _$QuestionDifficultyEnumMap, json['difficulty']) ??
+          QuestionDifficulty.medium,
     );
 
 Map<String, dynamic> _$$QuizQuestionImplToJson(_$QuizQuestionImpl instance) =>
@@ -64,4 +67,11 @@ Map<String, dynamic> _$$QuizQuestionImplToJson(_$QuizQuestionImpl instance) =>
       'options': instance.options,
       'correctIndex': instance.correctIndex,
       'explanation': instance.explanation,
+      'difficulty': _$QuestionDifficultyEnumMap[instance.difficulty]!,
     };
+
+const _$QuestionDifficultyEnumMap = {
+  QuestionDifficulty.easy: 'easy',
+  QuestionDifficulty.medium: 'medium',
+  QuestionDifficulty.hard: 'hard',
+};

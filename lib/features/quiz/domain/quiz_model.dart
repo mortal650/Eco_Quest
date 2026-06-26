@@ -11,6 +11,7 @@ class QuizResult with _$QuizResult {
     required int totalQuestions,
     required int ecoPointsEarned,
     required DateTime completedAt,
+    String? moduleTitle,
   }) = _QuizResult;
 
   factory QuizResult.fromJson(Map<String, dynamic> json) =>

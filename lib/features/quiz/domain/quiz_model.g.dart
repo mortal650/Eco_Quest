@@ -13,6 +13,7 @@ _$QuizResultImpl _$$QuizResultImplFromJson(Map<String, dynamic> json) =>
       totalQuestions: (json['totalQuestions'] as num).toInt(),
       ecoPointsEarned: (json['ecoPointsEarned'] as num).toInt(),
       completedAt: DateTime.parse(json['completedAt'] as String),
+      moduleTitle: json['moduleTitle'] as String?,
     );
 
 Map<String, dynamic> _$$QuizResultImplToJson(_$QuizResultImpl instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$QuizResultImplToJson(_$QuizResultImpl instance) =>
       'totalQuestions': instance.totalQuestions,
       'ecoPointsEarned': instance.ecoPointsEarned,
       'completedAt': instance.completedAt.toIso8601String(),
+      'moduleTitle': instance.moduleTitle,
     };

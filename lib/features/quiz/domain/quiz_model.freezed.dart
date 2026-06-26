@@ -25,6 +25,7 @@ mixin _$QuizResult {
   int get totalQuestions => throw _privateConstructorUsedError;
   int get ecoPointsEarned => throw _privateConstructorUsedError;
   DateTime get completedAt => throw _privateConstructorUsedError;
+  String? get moduleTitle => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $QuizResultCopyWith<$Res> {
       int score,
       int totalQuestions,
       int ecoPointsEarned,
-      DateTime completedAt});
+      DateTime completedAt,
+      String? moduleTitle});
 }
 
 /// @nodoc
@@ -64,6 +66,7 @@ class _$QuizResultCopyWithImpl<$Res, $Val extends QuizResult>
     Object? totalQuestions = null,
     Object? ecoPointsEarned = null,
     Object? completedAt = null,
+    Object? moduleTitle = freezed,
   }) {
     return _then(_value.copyWith(
       moduleId: null == moduleId
@@ -86,6 +89,10 @@ class _$QuizResultCopyWithImpl<$Res, $Val extends QuizResult>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      moduleTitle: freezed == moduleTitle
+          ? _value.moduleTitle
+          : moduleTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -103,7 +110,8 @@ abstract class _$$QuizResultImplCopyWith<$Res>
       int score,
       int totalQuestions,
       int ecoPointsEarned,
-      DateTime completedAt});
+      DateTime completedAt,
+      String? moduleTitle});
 }
 
 /// @nodoc
@@ -122,6 +130,7 @@ class __$$QuizResultImplCopyWithImpl<$Res>
     Object? totalQuestions = null,
     Object? ecoPointsEarned = null,
     Object? completedAt = null,
+    Object? moduleTitle = freezed,
   }) {
     return _then(_$QuizResultImpl(
       moduleId: null == moduleId
@@ -144,6 +153,10 @@ class __$$QuizResultImplCopyWithImpl<$Res>
           ? _value.completedAt
           : completedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      moduleTitle: freezed == moduleTitle
+          ? _value.moduleTitle
+          : moduleTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -156,7 +169,8 @@ class _$QuizResultImpl implements _QuizResult {
       required this.score,
       required this.totalQuestions,
       required this.ecoPointsEarned,
-      required this.completedAt});
+      required this.completedAt,
+      this.moduleTitle});
 
   factory _$QuizResultImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuizResultImplFromJson(json);
@@ -171,10 +185,12 @@ class _$QuizResultImpl implements _QuizResult {
   final int ecoPointsEarned;
   @override
   final DateTime completedAt;
+  @override
+  final String? moduleTitle;
 
   @override
   String toString() {
-    return 'QuizResult(moduleId: $moduleId, score: $score, totalQuestions: $totalQuestions, ecoPointsEarned: $ecoPointsEarned, completedAt: $completedAt)';
+    return 'QuizResult(moduleId: $moduleId, score: $score, totalQuestions: $totalQuestions, ecoPointsEarned: $ecoPointsEarned, completedAt: $completedAt, moduleTitle: $moduleTitle)';
   }
 
   @override
@@ -190,13 +206,15 @@ class _$QuizResultImpl implements _QuizResult {
             (identical(other.ecoPointsEarned, ecoPointsEarned) ||
                 other.ecoPointsEarned == ecoPointsEarned) &&
             (identical(other.completedAt, completedAt) ||
-                other.completedAt == completedAt));
+                other.completedAt == completedAt) &&
+            (identical(other.moduleTitle, moduleTitle) ||
+                other.moduleTitle == moduleTitle));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, moduleId, score, totalQuestions,
-      ecoPointsEarned, completedAt);
+      ecoPointsEarned, completedAt, moduleTitle);
 
   @JsonKey(ignore: true)
   @override
@@ -218,7 +236,8 @@ abstract class _QuizResult implements QuizResult {
       required final int score,
       required final int totalQuestions,
       required final int ecoPointsEarned,
-      required final DateTime completedAt}) = _$QuizResultImpl;
+      required final DateTime completedAt,
+      final String? moduleTitle}) = _$QuizResultImpl;
 
   factory _QuizResult.fromJson(Map<String, dynamic> json) =
       _$QuizResultImpl.fromJson;
@@ -233,6 +252,8 @@ abstract class _QuizResult implements QuizResult {
   int get ecoPointsEarned;
   @override
   DateTime get completedAt;
+  @override
+  String? get moduleTitle;
   @override
   @JsonKey(ignore: true)
   _$$QuizResultImplCopyWith<_$QuizResultImpl> get copyWith =>

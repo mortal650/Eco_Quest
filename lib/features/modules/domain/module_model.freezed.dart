@@ -479,6 +479,7 @@ mixin _$QuizQuestion {
   List<String> get options => throw _privateConstructorUsedError;
   int get correctIndex => throw _privateConstructorUsedError;
   String get explanation => throw _privateConstructorUsedError;
+  QuestionDifficulty get difficulty => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -497,7 +498,8 @@ abstract class $QuizQuestionCopyWith<$Res> {
       String question,
       List<String> options,
       int correctIndex,
-      String explanation});
+      String explanation,
+      QuestionDifficulty difficulty});
 }
 
 /// @nodoc
@@ -518,6 +520,7 @@ class _$QuizQuestionCopyWithImpl<$Res, $Val extends QuizQuestion>
     Object? options = null,
     Object? correctIndex = null,
     Object? explanation = null,
+    Object? difficulty = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -540,6 +543,10 @@ class _$QuizQuestionCopyWithImpl<$Res, $Val extends QuizQuestion>
           ? _value.explanation
           : explanation // ignore: cast_nullable_to_non_nullable
               as String,
+      difficulty: null == difficulty
+          ? _value.difficulty
+          : difficulty // ignore: cast_nullable_to_non_nullable
+              as QuestionDifficulty,
     ) as $Val);
   }
 }
@@ -557,7 +564,8 @@ abstract class _$$QuizQuestionImplCopyWith<$Res>
       String question,
       List<String> options,
       int correctIndex,
-      String explanation});
+      String explanation,
+      QuestionDifficulty difficulty});
 }
 
 /// @nodoc
@@ -576,6 +584,7 @@ class __$$QuizQuestionImplCopyWithImpl<$Res>
     Object? options = null,
     Object? correctIndex = null,
     Object? explanation = null,
+    Object? difficulty = null,
   }) {
     return _then(_$QuizQuestionImpl(
       id: null == id
@@ -598,6 +607,10 @@ class __$$QuizQuestionImplCopyWithImpl<$Res>
           ? _value.explanation
           : explanation // ignore: cast_nullable_to_non_nullable
               as String,
+      difficulty: null == difficulty
+          ? _value.difficulty
+          : difficulty // ignore: cast_nullable_to_non_nullable
+              as QuestionDifficulty,
     ));
   }
 }
@@ -610,7 +623,8 @@ class _$QuizQuestionImpl implements _QuizQuestion {
       required this.question,
       required final List<String> options,
       required this.correctIndex,
-      required this.explanation})
+      required this.explanation,
+      this.difficulty = QuestionDifficulty.medium})
       : _options = options;
 
   factory _$QuizQuestionImpl.fromJson(Map<String, dynamic> json) =>
@@ -632,10 +646,13 @@ class _$QuizQuestionImpl implements _QuizQuestion {
   final int correctIndex;
   @override
   final String explanation;
+  @override
+  @JsonKey()
+  final QuestionDifficulty difficulty;
 
   @override
   String toString() {
-    return 'QuizQuestion(id: $id, question: $question, options: $options, correctIndex: $correctIndex, explanation: $explanation)';
+    return 'QuizQuestion(id: $id, question: $question, options: $options, correctIndex: $correctIndex, explanation: $explanation, difficulty: $difficulty)';
   }
 
   @override
@@ -650,13 +667,21 @@ class _$QuizQuestionImpl implements _QuizQuestion {
             (identical(other.correctIndex, correctIndex) ||
                 other.correctIndex == correctIndex) &&
             (identical(other.explanation, explanation) ||
-                other.explanation == explanation));
+                other.explanation == explanation) &&
+            (identical(other.difficulty, difficulty) ||
+                other.difficulty == difficulty));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, question,
-      const DeepCollectionEquality().hash(_options), correctIndex, explanation);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      question,
+      const DeepCollectionEquality().hash(_options),
+      correctIndex,
+      explanation,
+      difficulty);
 
   @JsonKey(ignore: true)
   @override
@@ -678,7 +703,8 @@ abstract class _QuizQuestion implements QuizQuestion {
       required final String question,
       required final List<String> options,
       required final int correctIndex,
-      required final String explanation}) = _$QuizQuestionImpl;
+      required final String explanation,
+      final QuestionDifficulty difficulty}) = _$QuizQuestionImpl;
 
   factory _QuizQuestion.fromJson(Map<String, dynamic> json) =
       _$QuizQuestionImpl.fromJson;
@@ -693,6 +719,8 @@ abstract class _QuizQuestion implements QuizQuestion {
   int get correctIndex;
   @override
   String get explanation;
+  @override
+  QuestionDifficulty get difficulty;
   @override
   @JsonKey(ignore: true)
   _$$QuizQuestionImplCopyWith<_$QuizQuestionImpl> get copyWith =>

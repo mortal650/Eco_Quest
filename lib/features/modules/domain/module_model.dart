@@ -3,6 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'module_model.freezed.dart';
 part 'module_model.g.dart';
 
+enum QuestionDifficulty { easy, medium, hard }
+
 @freezed
 class EcoModule with _$EcoModule {
   const factory EcoModule({
@@ -39,6 +41,7 @@ class QuizQuestion with _$QuizQuestion {
     required List<String> options,
     required int correctIndex,
     required String explanation,
+    @Default(QuestionDifficulty.medium) QuestionDifficulty difficulty,
   }) = _QuizQuestion;
 
   factory QuizQuestion.fromJson(Map<String, dynamic> json) =>

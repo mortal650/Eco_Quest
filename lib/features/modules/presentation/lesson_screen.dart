@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../data/modules_repository.dart';
 import '../../profile/data/user_profile_notifier.dart';
 
@@ -77,14 +78,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                   onPressed: () async {
                     await _markComplete();
                     if (context.mounted) {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) => LessonScreen(
-                            moduleId: widget.moduleId,
-                            lessonIndex: widget.lessonIndex + 1,
-                          ),
-                        ),
-                      );
+                      context.go('/modules/${widget.moduleId}/lesson/${widget.lessonIndex + 1}');
                     }
                   },
                   child: const Text('Next Lesson'),
@@ -93,7 +87,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 FilledButton.tonal(
                   onPressed: () async {
                     await _markComplete();
-                    if (context.mounted) Navigator.of(context).pop();
+                    if (context.mounted) context.go('/modules/${widget.moduleId}');
                   },
                   child: const Text('Back to Module'),
                 ),
